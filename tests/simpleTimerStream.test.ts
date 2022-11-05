@@ -11,4 +11,19 @@ describe(`simpleTimerStream`, () => {
 
     assert(eventLog.length === 5);
   });
+
+  it(`should output 10 events, 1 each 500ms`, async () => {
+    const eventLog = [];
+    for await (
+      const event of simpleTimerStream({
+        intervalInMilliseconds: 500,
+        maxEventCount: 10,
+      })
+    ) {
+      console.log(event);
+      eventLog.push(event);
+    }
+
+    assert(eventLog.length === 10);
+  });
 });
