@@ -14,12 +14,13 @@ describe(`simpleTimerStream`, () => {
 
   it(`should output 5 events, 1 each 500ms`, async () => {
     const eventLog = [];
-    for await (
-      const event of simpleTimerStream({
-        intervalInMilliseconds: 500,
-        maxEventCount: 5,
-      })
-    ) {
+
+    const timer = simpleTimerStream({
+      intervalInMilliseconds: 500,
+      maxEventCount: 5,
+    });
+
+    for await (const event of timer) {
       console.log(event);
       eventLog.push(event);
     }
@@ -35,12 +36,12 @@ describe(`simpleTimerStream`, () => {
       abortController.abort();
     }, 4500);
 
-    for await (
-      const event of simpleTimerStream({
-        intervalInMilliseconds: 1000,
-        abortSignal: abortController.signal,
-      })
-    ) {
+    const timer = simpleTimerStream({
+      intervalInMilliseconds: 1000,
+      abortSignal: abortController.signal,
+    });
+
+    for await (const event of timer) {
       console.log(event);
       eventLog.push(event);
     }
