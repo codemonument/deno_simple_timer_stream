@@ -31,7 +31,7 @@ describe(`simpleTimerStream`, () => {
     const eventLog = [];
     const abortController = new AbortController();
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       abortController.abort();
     }, 4500);
 
@@ -46,5 +46,6 @@ describe(`simpleTimerStream`, () => {
     }
 
     assert(eventLog.length === 5);
+    clearTimeout(timeoutId);
   });
 });

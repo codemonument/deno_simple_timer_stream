@@ -38,12 +38,17 @@ export function simpleTimerStream(options?: SimpleTimerStreamOptions) {
       controller.enqueue(eventCount);
       timerId = setInterval(() => {
         eventCount++;
+
+        if (abortSignal?.aborted) {
+          // cancel all activities, bc. abortSignal was aborted
+          clearInterval(timerId);
+          controller.close();
+        }
+
         controller.enqueue(eventCount);
 
-        if (
-          !abortSignal && eventCount === maxEventCount ||
-          abortSignal?.aborted
-        ) {
+        if (eventCount === maxEventCount) {
+          // cancel all activities, bc. maxEventCount was reached
           clearInterval(timerId);
           controller.close();
         }
