@@ -10,9 +10,9 @@ export type SimpleTimerStreamOptions = {
   maxEventCount?: number;
 
   /**
-   * An abortController which can be used to abort this timer stream from the outside
+   * A signal of an abortController which can be used to abort this timer stream from the outside
    */
-  abortController?: AbortController;
+  abortSignal?: AbortSignal;
 };
 
 const defaultOptions: SimpleTimerStreamOptions = {
@@ -27,7 +27,7 @@ export function simpleTimerStream(options?: SimpleTimerStreamOptions) {
     options = { ...defaultOptions, ...options };
   }
 
-  const { maxEventCount, intervalInMilliseconds } = options;
+  const { maxEventCount, intervalInMilliseconds, abortSignal } = options;
 
   let timerId: number | undefined;
 
@@ -39,7 +39,10 @@ export function simpleTimerStream(options?: SimpleTimerStreamOptions) {
         events++;
         controller.enqueue(events);
 
-        if (events === maxEventCount) {
+        if (
+          !abortSignal && events === maxEventCount ||
+          abortSignal?.aborted
+        ) {
           clearInterval(timerId);
           controller.close();
         }
