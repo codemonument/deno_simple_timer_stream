@@ -6,6 +6,15 @@ A simple function which starts a timer with setInterval and returns a ReadableSt
 
 - Testing custom WriteableStream Instances"!
 
-## Usage 
+## Simple Usage 
 
-ToDo
+Simply start a simpleTimerStream by calling its function: `simpleTimerStream()`.  
+Per default, it will emit 5 events, 1 per second. 
+
+These Events can be read simply via a `for await` loop: 
+
+```ts
+for await (const eventCount of simpleTimerStream()) {
+    console.log(event);
+}
+```
