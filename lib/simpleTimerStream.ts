@@ -33,14 +33,15 @@ export function simpleTimerStream(options?: SimpleTimerStreamOptions) {
 
   const readableStream = new ReadableStream<number>({
     start(controller) {
-      let events = 0;
+      let eventCount = 1;
 
+      controller.enqueue(eventCount);
       timerId = setInterval(() => {
-        events++;
-        controller.enqueue(events);
+        eventCount++;
+        controller.enqueue(eventCount);
 
         if (
-          !abortSignal && events === maxEventCount ||
+          !abortSignal && eventCount === maxEventCount ||
           abortSignal?.aborted
         ) {
           clearInterval(timerId);

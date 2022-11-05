@@ -12,18 +12,39 @@ describe(`simpleTimerStream`, () => {
     assert(eventLog.length === 5);
   });
 
-  it(`should output 10 events, 1 each 500ms`, async () => {
+  it(`should output 5 events, 1 each 500ms`, async () => {
     const eventLog = [];
     for await (
       const event of simpleTimerStream({
         intervalInMilliseconds: 500,
-        maxEventCount: 10,
+        maxEventCount: 5,
       })
     ) {
       console.log(event);
       eventLog.push(event);
     }
 
-    assert(eventLog.length === 10);
+    assert(eventLog.length === 5);
+  });
+
+  it(`should be abortable by an abortController`, async () => {
+    const eventLog = [];
+    const abortController = new AbortController();
+
+    setTimeout(() => {
+      abortController.abort();
+    }, 4500);
+
+    for await (
+      const event of simpleTimerStream({
+        intervalInMilliseconds: 1000,
+        abortSignal: abortController.signal,
+      })
+    ) {
+      console.log(event);
+      eventLog.push(event);
+    }
+
+    assert(eventLog.length === 5);
   });
 });
