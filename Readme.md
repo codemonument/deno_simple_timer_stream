@@ -18,3 +18,20 @@ for await (const eventCount of simpleTimerStream()) {
     console.log(event);
 }
 ```
+
+## Parametrized Usage 
+
+To change the `maxEventsCount` and `intervalInMilliseconds` values, simply pass an options object into `simpleTimerStream()`: 
+
+```ts
+const timer = simpleTimerStream({
+        intervalInMilliseconds: 500,
+        maxEventCount: 5,
+});
+
+for await (const event of timer) {
+    console.log(event);
+}
+```
+
+## Usage with abort controller
