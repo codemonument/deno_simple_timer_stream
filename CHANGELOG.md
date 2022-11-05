@@ -1,5 +1,9 @@
 # Changelog 
 
+## 1.0.1 - 2022-11-05 
+
+Add @codemonument identifier to the repo description and created a new tag to transfer the new description to deno.land/x.
+
 ## 1.0.0 - 2022-11-05
 
 Initial Release of this package https://deno.land/x/simple_timer_stream. 
