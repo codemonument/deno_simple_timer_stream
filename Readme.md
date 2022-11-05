@@ -2,9 +2,16 @@
 
 A simple function which starts a timer with setInterval and returns a ReadableStream Instance (Web Streams). 
 
-## Useful for 
+Version 1.0.0 is considered feature complete right now. 
+It will receive bugfixes, if I get notified of them or find the bugs myself. 
+If someone has a nice feature which would greatly benefit this package, [raise an issue](https://github.com/codemonument/deno_simple_timer_stream/issues) or even better, 
+[submit a PR](https://github.com/codemonument/deno_simple_timer_stream/pulls) ! :) 
 
-- Testing custom WriteableStream Instances"!
+## Features 
+
+- Create a finite timerstream with 5 events, 1 per second per default 
+- Create a finite timerstream with x events, 1 per x ms (via options object)
+- Create an infinite timerstream by passing an abortSignal into the options object
 
 ## Simple Usage 
 
@@ -77,3 +84,7 @@ for await (const event of timer) {
 // this is necessary to not have dangling async listeners in deno tests
 clearTimeout(timeoutId);
 ```
+
+## Useful for 
+
+- Testing custom WriteableStream Instances"!
